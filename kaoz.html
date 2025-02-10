@@ -169,7 +169,6 @@
             ],
             // Adicione mais palavras e diálogos aqui
         };
-
         let currentDialogueIndex = 0;
         let currentDialogues = [];
 
@@ -216,7 +215,7 @@
             let index = 0;
             const typingSpeed = 35; // Velocidade de digitação em milissegundos
 
-            // Toca o áudio do narrador se estiver definido
+            // Toca o áudio do narrador assim que a função é chamada, se estiver definido
             if (audioSrc) {
                 const audio = new Audio(audioSrc);
                 audio.play();
@@ -230,7 +229,7 @@
                 }
             }
 
-            typeCharacter();
+            typeCharacter();  // Inicia a digitação
             document.getElementById("char-image").src = currentDialogues[currentDialogueIndex].image; // Troca de imagem
         }
 
