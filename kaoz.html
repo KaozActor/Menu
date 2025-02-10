@@ -109,7 +109,7 @@
                     image: "assets/imagens/personagem2.png" 
                 },
                 {
-                    text: "<strong>Entrada número 0:<strong> O experimento foi um sucesso",
+                    text: "Entrada número 0: O experimento foi um sucesso",
                     image: "assets/imagens/personagem1.png"
                 }
             ],
@@ -163,7 +163,7 @@
         function typeDialogue(text) {
             document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
             let index = 0;
-            const typingSpeed = 100; // Velocidade de digitação em milissegundos
+            const typingSpeed = 20; // Velocidade de digitação em milissegundos
             const audio = new Audio('assets/audios/som-tecla.mp3'); // Adicione o som da tecla aqui
 
             function typeCharacter() {
