@@ -172,8 +172,14 @@
                 document.getElementById("next-button").style.display = "inline";
                 document.getElementById("input-word").value = ""; // Limpar o campo de entrada
             } else {
-                alert("Palavra chave inválida! Tente novamente.");
+                // Substituir o alert por uma mensagem no dialog
+                document.getElementById("dialog").innerHTML = "Palavra chave inválida! Tente novamente.";
                 document.getElementById("input-word").value = ""; // Limpar o campo de entrada
+
+                // Fazer a mensagem desaparecer após 3 segundos
+                setTimeout(() => {
+                    document.getElementById("dialog").innerHTML = "Digite uma palavra chave para começar!";
+                }, 3000);
             }
         });
 
