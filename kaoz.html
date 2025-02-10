@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -136,7 +135,8 @@
                 // Se a palavra chave for válida
                 currentDialogues = dialoguesMap[inputWord];
                 currentDialogueIndex = 0;
-                updateDialogue();
+                // Inicia a digitação da mensagem
+                typeDialogue(currentDialogues[0].text);
                 document.getElementById("next-button").style.display = "inline";
                 document.getElementById("input-word").value = ""; // Limpar o campo de entrada
             } else {
@@ -148,7 +148,7 @@
         document.getElementById("next-button").addEventListener("click", function () {
             currentDialogueIndex++;
             if (currentDialogueIndex < currentDialogues.length) {
-                updateDialogue();
+                typeDialogue(currentDialogues[currentDialogueIndex].text);
             } else {
                 // Voltar à tela inicial sem recarregar a página
                 currentDialogueIndex = 0;
@@ -160,30 +160,46 @@
             }
         });
 
-        function updateDialogue() {
-            const currentDialogue = currentDialogues[currentDialogueIndex];
-            document.getElementById("dialog").innerHTML = currentDialogue.text; // Usar innerHTML
-            document.getElementById("char-image").src = currentDialogue.image;
+        function typeDialogue(text) {
+            document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
+            let index = 0;
+            const typingSpeed = 100; // Velocidade de digitação em milissegundos
+            const audio = new Audio('assets/audios/som-tecla.mp3'); // Adicione o som da tecla aqui
+
+            function typeCharacter() {
+                if (index < text.length) {
+                    document.getElementById("dialog").innerHTML += text.charAt(index);
+                    audio.currentTime = 0; // Reseta o áudio para começar do início
+                    audio.play();
+                    index++;
+                    setTimeout(typeCharacter, typingSpeed);
+                } else {
+                    // Reproduzir o som de concluir a mensagem, se necessário
+                }
+            }
+
+            typeCharacter();
+            document.getElementById("char-image").src = currentDialogues[currentDialogueIndex].image; // Troca de imagem
         }
 
         // Para ocultar o botão "próximo" inicialmente
         document.getElementById("next-button").style.display = "none";
 
         // Inicialização do áudio
-        const audio = document.createElement('audio');
-        audio.src = 'assets/audios/música-de-fundo.mp3';
-        audio.loop = true;
-        document.body.appendChild(audio);
+        const musicAudio = document.createElement('audio');
+        musicAudio.src = 'assets/audios/música-de-fundo.mp3';
+        musicAudio.loop = true;
+        document.body.appendChild(musicAudio);
 
         // Controle de música
         let musicPlaying = false;
 
         document.getElementById("music-button").addEventListener("click", function() {
             if (musicPlaying) {
-                audio.pause();
+                musicAudio.pause();
                 this.textContent = "Reproduzir Música"; // Mudar texto do botão
             } else {
-                audio.play();
+                musicAudio.play();
                 this.textContent = "Pausar Música"; // Mudar texto do botão
             }
             musicPlaying = !musicPlaying; // Alternar estado
