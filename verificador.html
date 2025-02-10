@@ -87,21 +87,21 @@
         const palavrasChave = {
             'kazuki': {
                 link: 'https://youtu.be/ES0K7y-7XY4?si=szPKjRTzlhYrByBq',
-                imagem: null, // Imagem local
-                audio: null, // Áudio local
-                video: null // Vídeo local
+                imagem: null,
+                audio: null,
+                video: null
             },
             'inumaki': {
                 link: 'https://youtu.be/4grxuKUEeT8?si=YTKFCJvLohpJ_yjI',
                 imagem: 'inumaki.jpeg',
-                audio: 'assets/audios/inumaki.mp3', // Áudio local, se necessário
-                video: 'assets/videos/inumaki.mp4' // Vídeo local
+                audio: 'assets/audios/inumaki.mp3',
+                video: 'assets/videos/inumaki.mp4'
             },
             'foo': {
                 link: 'https://example.com',
                 imagem: null,
-                audio: null, // Sem imagem e áudio
-                video: null // Sem vídeo
+                audio: null,
+                video: null
             },
             'facada': {
                 link: 'https://kaozactor.github.io/Bomb-Defuser/',
@@ -136,7 +136,10 @@
             if (palavrasChave[palavra]) {
                 const { link, imagem, audio, video } = palavrasChave[palavra];
 
-                resultado.innerHTML += `<p>Link para o conteúdo: <a href="${link}" target="_blank">Acessar</a></p>`;
+                // Verifica se o link não é nulo antes de exibir
+                if (link) {
+                    resultado.innerHTML += `<p>Link para o conteúdo: <a href="${link}" target="_blank">Acessar</a></p>`;
+                }
 
                 if (imagem) {
                     resultado.innerHTML += `<img src="${imagem}" alt="Imagem relacionada" />`;
