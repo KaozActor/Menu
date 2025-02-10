@@ -86,7 +86,7 @@
 <body>
 
     <h1>Kaoz</h1>
-    <img id="char-image" src="personagem1.png" alt="Personagem">
+    <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
     <div id="dialog">Digite uma palavra chave para começar!</div>
     <input type="text" id="input-word" placeholder="Digite uma palavra chave..." autofocus>
     <button id="submit-button">Enviar</button>
@@ -103,11 +103,11 @@
             "entrada0": [
                 {
                     text: "Parece que o experimento funcionou uh?",
-                    image: "personagem1.png" 
+                    image: "assets/imagens/personagem1.png" 
                 },
                 {
                     text: "Bem, essa vai ser a entrada número 0",
-                    image: "personagem2.png" 
+                    image: "assets/imagens/personagem2.png" 
                 },
                 {
                     text: "<strong>Entrada número 0:<strong> O experimento foi um sucesso",
@@ -117,11 +117,11 @@
             "facada": [
                 {
                     text: "Bem, essa palavra não será tão útil por aqui",
-                    image: "personagem1.png"
+                    image: "assets/imagens/personagem1.png"
                 },
                 {
                     text: "Talvez o <b>verificador<b> ajude",
-                    image: "personagem2.png"
+                    image: "assets/imagens/personagem2.png"
                 }
             ],
             // Adicione mais palavras e diálogos aqui
@@ -154,7 +154,7 @@
                 currentDialogueIndex = 0;
                 currentDialogues = [];
                 document.getElementById("dialog").innerHTML = "Digite uma palavra chave para começar!";
-                document.getElementById("char-image").src = "personagem1.png"; // Imagem inicial corrigida
+                document.getElementById("char-image").src = "assets/imagens/personagem1.png"; // Imagem inicial corrigida
                 document.getElementById("next-button").style.display = "none";
                 document.getElementById("input-word").focus(); // Foco no campo de entrada
             }
