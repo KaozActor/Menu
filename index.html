@@ -31,8 +31,13 @@
             color: white;
             font-size: 1em;
             cursor: pointer;
-            margin: 5px;
+            margin: 5px 0; /* Margem vertical entre os botões */
             transition: background-color 0.3s;
+            display: block; /* Faz com que cada botão ocupe uma linha inteira */
+            width: 100%; /* Opcional: faz cada botão ocupar a largura total */
+            max-width: 300px; /* Para limitar a largura dos botões */
+            margin-left: auto; /* Centraliza os botões */
+            margin-right: auto; /* Centraliza os botões */
         }
         button:hover {
             background-color: #574bde;
