@@ -105,6 +105,16 @@
                     image: "assets/imagens/personagem2.png",
                 }
             ],
+            "opcao1-nova": [
+                {
+                    text: "Esta é uma nova ramificação da opção 1.",
+                    image: "assets/imagens/personagem2.png"
+                },
+                {
+                    text: "Você gostaria de explorar mais?",
+                    image: "assets/imagens/personagem1.png",
+                }
+            ],
             "opcao2": [
                 {
                     text: "Você escolheu a opção 2.",
@@ -116,6 +126,16 @@
                 },
                 {
                     text: "Vamos explorar essas possibilidades!",
+                    image: "assets/imagens/personagem1.png",
+                }
+            ],
+            "opcao2-nova": [
+                {
+                    text: "Esta é a nova ramificação da opção 2.",
+                    image: "assets/imagens/personagem2.png"
+                },
+                {
+                    text: "Você quer saber mais sobre isso?",
                     image: "assets/imagens/personagem1.png",
                 }
             ],
@@ -164,11 +184,10 @@
                     // Show options after typing
                     document.getElementById("char-image").src = image; // Troca de imagem
                     document.getElementById("next-button").style.display = "inline"; // Show next button
-                    document.getElementById("options").style.display = "inline"; // Show options after typing
                 }
             }
 
-            typeCharacter();  // Inicia a digitação
+            typeCharacter(); // Inicia a digitação
         }
 
         function processOption(option) {
@@ -181,14 +200,15 @@
             const optionsDiv = document.getElementById("options");
             optionsDiv.innerHTML = ""; // Limpar opções anteriores
 
-            const optionsArray = ["opcao1", "opcao2", "opcao3"]; // Substitua por suas entradas desejadas
+            // As opções disponíveis dependendo do estado atual
+            const optionsArray = ["opcao1", "opcao2", "opcao3"];
             optionsArray.forEach(option => {
                 const button = document.createElement("button");
                 button.innerHTML = "Resposta " + (optionsArray.indexOf(option) + 1);
                 button.addEventListener("click", function() {
-                    // Hide options once a button is clicked
-                    document.getElementById("options").style.display = "none";
-                    processOption(option);
+                    // Hide the button 'Próximo' when the user selects an option
+                    document.getElementById("next-button").style.display = "none"; 
+                    processOption(option); // process the selected option
                 });
                 optionsDiv.appendChild(button);
             });
