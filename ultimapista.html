@@ -40,7 +40,6 @@
 </head>
 <body>
 
-    <h1>Enigma do Lado</h1>
     <div class="word-list">
         <div>Comunismo</div>
         <div>Cérebro Criativo</div>
@@ -57,14 +56,14 @@
         <strong><- 0  1 -></strong>
     </div>
 
-    <input type="text" id="password" placeholder="Digite a senha em 0 e 1">
+    <input type="text" id="password" placeholder="Digite a senha">
     <button class="submit-btn" onclick="checkPassword()">Enviar</button>
 
     <script>
         function checkPassword() {
             var password = document.getElementById('password').value;
             // Aqui você pode definir a lógica da senha correta
-            if (password === '000000000') { // Exemplo: todas as palavras são '0'
+            if (password === '011101100') {
                 alert('Senha correta!');
             } else {
                 alert('Senha incorreta!');
