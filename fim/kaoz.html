@@ -37,7 +37,11 @@
             max-width: 80%;
         }
 
-        .option-button {
+        #options {
+            margin-top: 20px;
+        }
+
+        button {
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
@@ -49,7 +53,7 @@
             transition: background-color 0.3s;
         }
 
-        .option-button:hover {
+        button:hover {
             background-color: #574bde;
         }
 
@@ -65,161 +69,124 @@
 
     <h1>Kaoz</h1>
     <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
-    <div id="dialog">Clique na sua opção de resposta!</div>
-    <div id="options-container"></div>
-
-    <button id="music-button">Reproduzir Música</button> 
+    <div id="dialog">Clique em uma opção para começar!</div>
+    <div id="options"></div>
 
     <footer>
         <p>© 2025 Kaoz</p>
     </footer>
 
     <script>
-        // Objeto que relaciona diálogos e opções
+        // Objeto que relaciona entradas e diálogos
         const dialoguesMap = {
-            "inicio": {
-                dialogues: [
-                    {
-                        text: "Bem-vindo! O que você deseja fazer?",
-                        image: "assets/imagens/personagem1.png",
-                        options: [
-                            { text: "Falar sobre o experimento", next: "experimento" },
-                            { text: "Perguntar sobre a entrada", next: "entrada" },
-                            { text: "Sair", next: "sair" }
-                        ]
-                    }
-                ],
-            },
-            "experimento": {
-                dialogues: [
-                    {
-                        text: "O experimento foi um sucesso! E agora?",
-                        image: "assets/imagens/personagem2.png",
-                        options: [
-                            { text: "Continuar o experimento", next: "continuar" },
-                            { text: "Falar sobre o plano", next: "plano" }
-                        ]
-                    }
-                ]
-            },
-            "entrada": {
-                dialogues: [
-                    {
-                        text: "Há muitas entradas por aqui. Qual você quer explorar?",
-                        image: "assets/imagens/personagem1.png",
-                        options: [
-                            { text: "Entrada número 0", next: "entrada0" },
-                            { text: "Entrada número 1", next: "entrada1" }
-                        ]
-                    }
-                ]
-            },
-            "entrada0": {
-                dialogues: [
-                    {
-                        text: "Essa é a entrada número 0.",
-                        image: "assets/imagens/personagem1.png",
-                        options: [
-                            { text: "Falar sobre o sucesso", next: "sucesso" },
-                            { text: "Retornar", next: "inicio" }
-                        ]
-                    }
-                ],
-            },
-            "entrada1": {
-                dialogues: [
-                    {
-                        text: "Esta é a entrada número 1. Aqui temos segredos!",
-                        image: "assets/imagens/personagem2.png",
-                        options: [
-                            { text: "O que são os segredos?", next: "segredos" },
-                            { text: "Voltar para o início", next: "inicio" }
-                        ]
-                    }
-                ],
-            },
-            "sair": {
-                dialogues: [
-                    {
-                        text: "Obrigado por jogar! Até a próxima.",
-                        image: "assets/imagens/personagem1.png",
-                        options: []
-                    }
-                ],
-            },
-            "sucesso": {
-                dialogues: [
-                    {
-                        text: "Parabéns, você fez um bom trabalho!",
-                        image: "assets/imagens/fumado.png",
-                        options: [
-                            { text: "Continuar", next: "inicio" }
-                        ]
-                    }
-                ],
-            },
-            "segredos": {
-                dialogues: [
-                    {
-                        text: "Os segredos estão guardados a sete chaves!",
-                        image: "assets/imagens/personagem1.png",
-                        options: [
-                            { text: "Muito interessante", next: "inicio" },
-                            { text: "Voltar para o início", next: "inicio" }
-                        ]
-                    }
-                ],
-            },
-            // Adicione mais diálogos e opções aqui
+            "inicial": [
+                {
+                    text: "Olá! Estou feliz que você está aqui.",
+                    image: "assets/imagens/personagem1.png"
+                },
+                {
+                    text: "Qual opção você deseja?",
+                    image: "assets/imagens/personagem1.png"
+                }
+            ],
+            "opcao1": [
+                {
+                    text: "Você escolheu a opção 1.",
+                    image: "assets/imagens/personagem1.png",
+                },
+                {
+                    text: "Isso é interessante! Vamos falar mais sobre isso.",
+                    image: "assets/imagens/personagem1.png",
+                },
+                {
+                    text: "Talvez você tenha mais perguntas!",
+                    image: "assets/imagens/personagem2.png",
+                }
+            ],
+            "opcao2": [
+                {
+                    text: "Você escolheu a opção 2.",
+                    image: "assets/imagens/personagem1.png",
+                },
+                {
+                    text: "Essa decisão pode mudar muito!",
+                    image: "assets/imagens/personagem2.png",
+                },
+                {
+                    text: "Vamos explorar essas possibilidades!",
+                    image: "assets/imagens/personagem1.png",
+                }
+            ],
+            "opcao3": [
+                {
+                    text: "Você escolheu a opção 3.",
+                    image: "assets/imagens/personagem1.png",
+                },
+                {
+                    text: "Isso leva a um caminho diferente.",
+                    image: "assets/imagens/personagem2.png",
+                },
+                {
+                    text: "Estou ansioso para ver onde isso nos leva!",
+                    image: "assets/imagens/personagem1.png",
+                }
+            ]
         };
 
         let currentDialogueIndex = 0;
         let currentDialogues = [];
 
-        function showDialogue(dialogue) {
-            const dialog = document.getElementById("dialog");
-            const optionsContainer = document.getElementById("options-container");
+        function showDialogue(dialogues) {
+            currentDialogues = dialogues;
+            currentDialogueIndex = 0;
+            typeDialogue(currentDialogues[currentDialogueIndex].text, currentDialogues[currentDialogueIndex].image);
+            currentDialogueIndex++;
+        }
 
-            dialog.innerHTML = dialogue.text;
-            document.getElementById("char-image").src = dialogue.image;
+        function typeDialogue(text, image) {
+            document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
+            let index = 0;
+            const typingSpeed = 35; // Velocidade de digitação em milissegundos
 
-            // Limpa opções anteriores
-            optionsContainer.innerHTML = '';
-            dialogue.options.forEach(option => {
+            function typeCharacter() {
+                if (index < text.length) {
+                    document.getElementById("dialog").innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(typeCharacter, typingSpeed);
+                } else {
+                    // Exibir opções após a digitação
+                    if (currentDialogueIndex < currentDialogues.length) {
+                        showNextOptions();
+                    }
+                }
+            }
+
+            typeCharacter();  // Inicia a digitação
+            document.getElementById("char-image").src = image; // Troca de imagem
+        }
+
+        function showNextOptions() {
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = ""; // Limpar opções anteriores
+
+            const optionsArray = ["opcao1", "opcao2", "opcao3"]; // Substitua por suas entradas desejadas
+            optionsArray.forEach(option => {
                 const button = document.createElement("button");
-                button.className = "option-button";
-                button.textContent = option.text;
-                button.onclick = () => handleOptionClick(option.next);
-                optionsContainer.appendChild(button);
+                button.innerHTML = "Resposta " + (optionsArray.indexOf(option) + 1);
+                button.addEventListener("click", function() {
+                    processOption(option);
+                });
+                optionsDiv.appendChild(button);
             });
-
-            // Toca o áudio do narrador assim que as opções são mostradas
-            if (dialogue.audio) {
-                const audio = new Audio(dialogue.audio);
-                audio.play();
-            }
         }
 
-        function handleOptionClick(next) {
-            // Se o próximo passo for "sair", termina o jogo
-            if (next === "sair") {
-                showDialogue(dialoguesMap[next].dialogues[0]);
-                return;
-            }
-
-            if (dialoguesMap[next]) {
-                currentDialogues = dialoguesMap[next].dialogues;
-                currentDialogueIndex = 0;
-                showDialogue(currentDialogues[currentDialogueIndex]);
-            } else {
-                // Se não houver diálogo, voltar ao início
-                showDialogue(dialoguesMap["inicio"].dialogues[0]);
-            }
+        function processOption(option) {
+            const selectedDialogue = dialoguesMap[option] || [];
+            showDialogue(selectedDialogue);
         }
 
-        // Inicia o diálogo inicial
-        currentDialogues = dialoguesMap["inicio"].dialogues;
-        showDialogue(currentDialogues[currentDialogueIndex]);
+        // Início da interação
+        showDialogue(dialoguesMap["inicial"]); // Inicia com o diálogo inicial
 
         // Inicialização do áudio
         const musicAudio = document.createElement('audio');
@@ -230,7 +197,12 @@
         // Controle de música
         let musicPlaying = false;
 
-        document.getElementById("music-button").addEventListener("click", function() {
+        // Botão de música
+        const musicButton = document.createElement('button');
+        musicButton.innerHTML = 'Reproduzir Música';
+        document.body.appendChild(musicButton);
+
+        musicButton.addEventListener("click", function() {
             if (musicPlaying) {
                 musicAudio.pause();
                 this.textContent = "Reproduzir Música"; // Mudar texto do botão
