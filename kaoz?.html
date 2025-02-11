@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaoz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background-color: #fafafa;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #6a5acd;
+            margin-bottom: 20px;
+        }
+
+        #char-image {
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #dialog {
+            margin: 20px auto;
+            font-size: 1.2em;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+        }
+
+        .option-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6a5acd;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .option-button:hover {
+            background-color: #574bde;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Kaoz</h1>
+    <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
+    <div id="dialog">Clique na sua opção de resposta!</div>
+    <div id="options-container"></div>
+
+    <button id="music-button">Reproduzir Música</button> 
+
+    <footer>
+        <p>© 2025 Kaoz</p>
+    </footer>
+
+    <script>
+        // Objeto que relaciona diálogos e opções
+        const dialoguesMap = {
+            "inicio": {
+                dialogues: [
+                    {
+                        text: "Bem-vindo! O que você deseja fazer?",
+                        image: "assets/imagens/personagem1.png",
+                        options: [
+                            { text: "Falar sobre o experimento", next: "experimento" },
+                            { text: "Perguntar sobre a entrada", next: "entrada" },
+                            { text: "Sair", next: "sair" }
+                        ]
+                    }
+                ],
+            },
+            "experimento": {
+                dialogues: [
+                    {
+                        text: "O experimento foi um sucesso! E agora?",
+                        image: "assets/imagens/personagem2.png",
+                        options: [
+                            { text: "Continuar o experimento", next: "continuar" },
+                            { text: "Falar sobre o plano", next: "plano" }
+                        ]
+                    }
+                ]
+            },
+            "entrada": {
+                dialogues: [
+                    {
+                        text: "Há muitas entradas por aqui. Qual você quer explorar?",
+                        image: "assets/imagens/personagem1.png",
+                        options: [
+                            { text: "Entrada número 0", next: "entrada0" },
+                            { text: "Entrada número 1", next: "entrada1" }
+                        ]
+                    }
+                ]
+            },
+            "entrada0": {
+                dialogues: [
+                    {
+                        text: "Essa é a entrada número 0.",
+                        image: "assets/imagens/personagem1.png",
+                        options: [
+                            { text: "Falar sobre o sucesso", next: "sucesso" },
+                            { text: "Retornar", next: "inicio" }
+                        ]
+                    }
+                ],
+            },
+            "entrada1": {
+                dialogues: [
+                    {
+                        text: "Esta é a entrada número 1. Aqui temos segredos!",
+                        image: "assets/imagens/personagem2.png",
+                        options: [
+                            { text: "O que são os segredos?", next: "segredos" },
+                            { text: "Voltar para o início", next: "inicio" }
+                        ]
+                    }
+                ],
+            },
+            "sair": {
+                dialogues: [
+                    {
+                        text: "Obrigado por jogar! Até a próxima.",
+                        image: "assets/imagens/personagem1.png",
+                        options: []
+                    }
+                ],
+            },
+            "sucesso": {
+                dialogues: [
+                    {
+                        text: "Parabéns, você fez um bom trabalho!",
+                        image: "assets/imagens/fumado.png",
+                        options: [
+                            { text: "Continuar", next: "inicio" }
+                        ]
+                    }
+                ],
+            },
+            "segredos": {
+                dialogues: [
+                    {
+                        text: "Os segredos estão guardados a sete chaves!",
+                        image: "assets/imagens/personagem1.png",
+                        options: [
+                            { text: "Muito interessante", next: "inicio" },
+                            { text: "Voltar para o início", next: "inicio" }
+                        ]
+                    }
+                ],
+            },
+            // Adicione mais diálogos e opções aqui
+        };
+
+        let currentDialogueIndex = 0;
+        let currentDialogues = [];
+
+        function showDialogue(dialogue) {
+            const dialog = document.getElementById("dialog");
+            const optionsContainer = document.getElementById("options-container");
+
+            dialog.innerHTML = dialogue.text;
+            document.getElementById("char-image").src = dialogue.image;
+
+            // Limpa opções anteriores
+            optionsContainer.innerHTML = '';
+            dialogue.options.forEach(option => {
+                const button = document.createElement("button");
+                button.className = "option-button";
+                button.textContent = option.text;
+                button.onclick = () => handleOptionClick(option.next);
+                optionsContainer.appendChild(button);
+            });
+
+            // Toca o áudio do narrador assim que as opções são mostradas
+            if (dialogue.audio) {
+                const audio = new Audio(dialogue.audio);
+                audio.play();
+            }
+        }
+
+        function handleOptionClick(next) {
+            // Se o próximo passo for "sair", termina o jogo
+            if (next === "sair") {
+                showDialogue(dialoguesMap[next].dialogues[0]);
+                return;
+            }
+
+            if (dialoguesMap[next]) {
+                currentDialogues = dialoguesMap[next].dialogues;
+                currentDialogueIndex = 0;
+                showDialogue(currentDialogues[currentDialogueIndex]);
+            } else {
+                // Se não houver diálogo, voltar ao início
+                showDialogue(dialoguesMap["inicio"].dialogues[0]);
+            }
+        }
+
+        // Inicia o diálogo inicial
+        currentDialogues = dialoguesMap["inicio"].dialogues;
+        showDialogue(currentDialogues[currentDialogueIndex]);
+
+        // Inicialização do áudio
+        const musicAudio = document.createElement('audio');
+        musicAudio.src = 'assets/audios/música-de-fundo.mp3';
+        musicAudio.loop = true;
+        document.body.appendChild(musicAudio);
+
+        // Controle de música
+        let musicPlaying = false;
+
+        document.getElementById("music-button").addEventListener("click", function() {
+            if (musicPlaying) {
+                musicAudio.pause();
+                this.textContent = "Reproduzir Música"; // Mudar texto do botão
+            } else {
+                musicAudio.play();
+                this.textContent = "Pausar Música"; // Mudar texto do botão
+            }
+            musicPlaying = !musicPlaying; // Alternar estado
+        });
+
+    </script>
+</body>
+</html>
