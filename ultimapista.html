@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enigma do Lado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .word-list {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+        }
+        .submit-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .instructions {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Enigma do Lado</h1>
+    <div class="word-list">
+        <div>Comunismo</div>
+        <div>Cérebro Criativo</div>
+        <div>Teclas Agudas</div>
+        <div>Barra de Rolagem</div>
+        <div>Metais Alcalinos</div>
+        <div>Teclado Numérico</div>
+        <div>Leste</div>
+        <div>Coração</div>
+        <div>Nove Horas</div>
+    </div>
+
+    <div class="instructions">
+        <strong><- 0  1 -></strong>
+    </div>
+
+    <input type="text" id="password" placeholder="Digite a senha em 0 e 1">
+    <button class="submit-btn" onclick="checkPassword()">Enviar</button>
+
+    <script>
+        function checkPassword() {
+            var password = document.getElementById('password').value;
+            // Aqui você pode definir a lógica da senha correta
+            if (password === '000000000') { // Exemplo: todas as palavras são '0'
+                alert('Senha correta!');
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+    </script>
+</body>
+</html>
