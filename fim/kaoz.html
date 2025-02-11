@@ -39,6 +39,7 @@
 
         #options {
             margin-top: 20px;
+            display: none; /* Hide the options initially */
         }
 
         button {
@@ -71,6 +72,7 @@
     <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
     <div id="dialog">Clique em uma opção para começar!</div>
     <div id="options"></div>
+    <button id="next-button" style="display:none;">Próximo</button>
 
     <footer>
         <p>© 2025 Kaoz</p>
@@ -135,18 +137,22 @@
 
         let currentDialogueIndex = 0;
         let currentDialogues = [];
+        let isTyping = false; // Flag to check if text is being typed
 
         function showDialogue(dialogues) {
             currentDialogues = dialogues;
             currentDialogueIndex = 0;
             typeDialogue(currentDialogues[currentDialogueIndex].text, currentDialogues[currentDialogueIndex].image);
-            currentDialogueIndex++;
         }
 
         function typeDialogue(text, image) {
             document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
             let index = 0;
             const typingSpeed = 35; // Velocidade de digitação em milissegundos
+            isTyping = true; // Set the typing flag to true
+
+            document.getElementById("next-button").style.display = "none"; // Hide next button while typing
+            document.getElementById("options").style.display = "none"; // Hide options while typing
 
             function typeCharacter() {
                 if (index < text.length) {
@@ -154,18 +160,24 @@
                     index++;
                     setTimeout(typeCharacter, typingSpeed);
                 } else {
-                    // Exibir opções após a digitação
-                    if (currentDialogueIndex < currentDialogues.length) {
-                        showNextOptions();
-                    }
+                    isTyping = false; // Finished typing
+                    // Show options after typing
+                    document.getElementById("char-image").src = image; // Troca de imagem
+                    document.getElementById("next-button").style.display = "inline"; // Show next button
+                    document.getElementById("options").style.display = "inline"; // Show options after typing
                 }
             }
 
             typeCharacter();  // Inicia a digitação
-            document.getElementById("char-image").src = image; // Troca de imagem
         }
 
-        function showNextOptions() {
+        function processOption(option) {
+            const selectedDialogue = dialoguesMap[option] || [];
+            // Display each dialogue in order
+            showDialogue(selectedDialogue);
+        }
+
+        function showOptions() {
             const optionsDiv = document.getElementById("options");
             optionsDiv.innerHTML = ""; // Limpar opções anteriores
 
@@ -174,15 +186,13 @@
                 const button = document.createElement("button");
                 button.innerHTML = "Resposta " + (optionsArray.indexOf(option) + 1);
                 button.addEventListener("click", function() {
+                    // Hide options once a button is clicked
+                    document.getElementById("options").style.display = "none";
                     processOption(option);
                 });
                 optionsDiv.appendChild(button);
             });
-        }
-
-        function processOption(option) {
-            const selectedDialogue = dialoguesMap[option] || [];
-            showDialogue(selectedDialogue);
+            optionsDiv.style.display = "inline"; // Show the options now
         }
 
         // Início da interação
@@ -193,13 +203,14 @@
         musicAudio.src = 'assets/audios/música-de-fundo.mp3';
         musicAudio.loop = true;
         document.body.appendChild(musicAudio);
+        musicAudio.play(); // Iniciar a música
 
         // Controle de música
-        let musicPlaying = false;
+        let musicPlaying = true;
 
         // Botão de música
         const musicButton = document.createElement('button');
-        musicButton.innerHTML = 'Reproduzir Música';
+        musicButton.innerHTML = 'Pausar Música';
         document.body.appendChild(musicButton);
 
         musicButton.addEventListener("click", function() {
@@ -211,6 +222,21 @@
                 this.textContent = "Pausar Música"; // Mudar texto do botão
             }
             musicPlaying = !musicPlaying; // Alternar estado
+        });
+
+        // Botão "Próximo" para avançar os diálogos
+        document.getElementById("next-button").addEventListener("click", function() {
+            if (currentDialogueIndex < currentDialogues.length) {
+                const dialogue = currentDialogues[currentDialogueIndex];
+                typeDialogue(dialogue.text, dialogue.image);
+                currentDialogueIndex++;
+            } else {
+                // Se todas as falas tiverem sido exibidas, voltar à tela inicial
+                currentDialogueIndex = 0;
+                document.getElementById("dialog").innerHTML = "Clique em uma opção para continuar!";
+                document.getElementById("next-button").style.display = "none"; // Hide next button
+                showOptions(); // Show options for next selection
+            }
         });
 
     </script>
