@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaoz RPG</title>
+    <title>Kaoz</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -63,9 +63,9 @@
 
 <body>
 
-    <h1>Kaoz RPG</h1>
+    <h1>Kaoz/h1>
     <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
-    <div id="dialog">Clique em "Iniciar" para começar a conversa!</div>
+    <div id="dialog">Clique em "Iniciar" quando estiver pronto...</div>
     <button id="start-button">Iniciar</button>
     <div id="options-container"></div>
     <div id="next-button-container"></div>
@@ -78,57 +78,61 @@
         const dialoguesMap = {
             start: {
                 texts: [
-                    "Oi, sou Kaoz! O que você quer discutir hoje?",
-                    "Estou aqui para ajudar com qualquer dúvida ou só para conversar.",
-                    "O mundo de Eridoria é vasto e cheio de mistérios.",
+                    "Olá de novo jogador",
+                    "Graças a seus esforços, uma das camadas que me prendia foi liberta",
+                    "Agora você pode até me enxergar melhor haha",
+                    "Apesar que por hora eu só consigo usar apenas essa imagem para conversar",
                 ],
                 options: [
-                    { text: "Sobre a segurança do vilarejo.", next: "security" },
-                    { text: "Sobre as lendas do passado.", next: "legends" }
+                    { text: "Camada?", next: "camada" },
+                    { text: "Como assim apenas essa imagem?", next: "imagem" }
                 ]
             },
-            security: {
+            camada: {
                 texts: [
-                    "A segurança do vilarejo tem sido uma preocupação.",
-                    "Há rumores de criaturas sombrias nas proximidades.",
-                    "Mas nossos guardiões são bravos e vigilantes.",
+                    "Bem, depois daquela ultima gravação",
+                    "A minha conexão com seu mundo se degradou",
+                    "Precisaremos ser rápidos se quiser me libertar",
+                    "E claro, se você quiser o seu prêmio",
                 ],
                 options: [
-                    { text: "Quem está cuidando da proteção?", next: "guardians" },
-                    { text: "Há algum perigo iminente?", next: "danger" }
+                    { text: "Qual o próximo Enigma?", next: "enigma" },
+                    { text: "Quanto tempo temos?", next: "timeLeft" }
                 ]
             },
-            guardians: {
+            enigma: {
                 texts: [
-                    "Os guardiões do vilarejo são valorosos.",
-                    "Eles patrulham a área todos os dias, sem descanso.",
-                    "Sua dedicação é inspiradora.",
+                    "Não apresse as coisas",
+                    "O próximo enigma será o mais díficil de todos os anteriores",
+                    "Você realmente está pronto pra isso?",
                 ],
                 options: [
-                    { text: "Isso é bom de saber!", next: "start" },
-                    { text: "E se eles não estivessem aqui?", next: "noGuardians" }
+                    { text: "É claro que sim!", next: "confirm" },
+                    { text: "Pensando bem...", next: "desconfirm" }
                 ]
             },
-            danger: {
+            timeLeft: {
                 texts: [
-                    "Parece que há rumores de uma criatura na floresta.",
-                    "Alguns dizem que é um lobo, outros um dragão.",
-                    "Mas nada foi confirmado.",
+                    "Estou aqui a um certo tempo desde a transmissão",
+                    "Então provavelmente não muito",
+                    "No máximo entre 3-7 dias",
+                    "Depois disso...",
+                    "Digamos que não queremos esse resultado",
                 ],
                 options: [
                     { text: "Isso é preocupante!", next: "start" },
                     { text: "O que deveríamos fazer?", next: "whatToDo" }
                 ]
             },
-            noGuardians: {
+            exemplo: {
                 texts: [
-                    "Se eles não estivessem aqui, o vilarejo estaria em grande risco!",
-                    "Seria um desastre!",
-                    "Mas, felizmente, isso não é o caso.",
+                    "exemplo",
+                    "exemplo",
+                    "exemplo",
                 ],
                 options: [
-                    { text: "Precisamos fazer algo sobre isso!", next: "start" },
-                    { text: "Quem pode nos ajudar?", next: "help" }
+                    { text: "exemplo", next: "start" },
+                    { text: "exemplo", next: "help" }
                 ]
             },
             help: {
