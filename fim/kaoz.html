@@ -12,6 +12,7 @@
             background-color: #fafafa;
             color: #333;
             padding: 20px;
+            position: relative; /* Necessário para o posicionamento absoluto dos botões */
         }
 
         h1 {
@@ -63,6 +64,13 @@
             font-size: 0.9em;
             color: #777;
         }
+
+        #next-button {
+            position: absolute;  /* Posicionamento absoluto */
+            bottom: 20px;        /* Posição fixada na parte inferior */
+            right: 20px;         /* Margem à direita */
+            display: none;       /* Oculte inicialmente */
+        }
     </style>
 </head>
 
@@ -72,7 +80,7 @@
     <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
     <div id="dialog">Clique em uma opção para começar!</div>
     <div id="options"></div>
-    <button id="next-button" style="display:none;">Próximo</button>
+    <button id="next-button">Próximo</button>
 
     <footer>
         <p>© 2025 Kaoz</p>
@@ -81,6 +89,7 @@
     <script>
         // Objeto que relaciona entradas e diálogos
         const dialoguesMap = {
+            // Diálogo inicial
             "inicial": [
                 {
                     text: "Olá! Estou feliz que você está aqui.",
@@ -91,6 +100,7 @@
                     image: "assets/imagens/personagem1.png"
                 }
             ],
+            // Opção 1
             "opcao1": [
                 {
                     text: "Você escolheu a opção 1.",
@@ -100,11 +110,8 @@
                     text: "Isso é interessante! Vamos falar mais sobre isso.",
                     image: "assets/imagens/personagem1.png",
                 },
-                {
-                    text: "Talvez você tenha mais perguntas!",
-                    image: "assets/imagens/personagem2.png",
-                }
             ],
+            // Ramificação da Opção 1
             "opcao1-nova": [
                 {
                     text: "Esta é uma nova ramificação da opção 1.",
@@ -115,6 +122,7 @@
                     image: "assets/imagens/personagem1.png",
                 }
             ],
+            // Opção 2
             "opcao2": [
                 {
                     text: "Você escolheu a opção 2.",
@@ -124,11 +132,8 @@
                     text: "Essa decisão pode mudar muito!",
                     image: "assets/imagens/personagem2.png",
                 },
-                {
-                    text: "Vamos explorar essas possibilidades!",
-                    image: "assets/imagens/personagem1.png",
-                }
             ],
+            // Ramificação da Opção 2
             "opcao2-nova": [
                 {
                     text: "Esta é a nova ramificação da opção 2.",
@@ -139,6 +144,7 @@
                     image: "assets/imagens/personagem1.png",
                 }
             ],
+            // Opção 3
             "opcao3": [
                 {
                     text: "Você escolheu a opção 3.",
@@ -148,16 +154,12 @@
                     text: "Isso leva a um caminho diferente.",
                     image: "assets/imagens/personagem2.png",
                 },
-                {
-                    text: "Estou ansioso para ver onde isso nos leva!",
-                    image: "assets/imagens/personagem1.png",
-                }
             ]
         };
 
         let currentDialogueIndex = 0;
         let currentDialogues = [];
-        let isTyping = false; // Flag to check if text is being typed
+        let isTyping = false; // Flag para verificar se o texto está sendo digitado
 
         function showDialogue(dialogues) {
             currentDialogues = dialogues;
@@ -169,10 +171,10 @@
             document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
             let index = 0;
             const typingSpeed = 35; // Velocidade de digitação em milissegundos
-            isTyping = true; // Set the typing flag to true
+            isTyping = true; // Define a flag de digitação como verdadeira
 
-            document.getElementById("next-button").style.display = "none"; // Hide next button while typing
-            document.getElementById("options").style.display = "none"; // Hide options while typing
+            document.getElementById("next-button").style.display = "none"; // Oculta o botão "Próximo" enquanto digita
+            document.getElementById("options").style.display = "none"; // Oculta as opções enquanto digita
 
             function typeCharacter() {
                 if (index < text.length) {
@@ -180,10 +182,9 @@
                     index++;
                     setTimeout(typeCharacter, typingSpeed);
                 } else {
-                    isTyping = false; // Finished typing
-                    // Show options after typing
+                    isTyping = false; // Finalizou a digitação
                     document.getElementById("char-image").src = image; // Troca de imagem
-                    document.getElementById("next-button").style.display = "inline"; // Show next button
+                    document.getElementById("next-button").style.display = "inline"; // Mostra o botão "Próximo" após a digitação
                 }
             }
 
@@ -192,27 +193,25 @@
 
         function processOption(option) {
             const selectedDialogue = dialoguesMap[option] || [];
-            // Display each dialogue in order
             showDialogue(selectedDialogue);
         }
 
         function showOptions() {
             const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = ""; // Limpar opções anteriores
+            optionsDiv.innerHTML = ""; // Limpa opções anteriores
 
-            // As opções disponíveis dependendo do estado atual
+            // Crie um array de opções disponíveis
             const optionsArray = ["opcao1", "opcao2", "opcao3"];
             optionsArray.forEach(option => {
                 const button = document.createElement("button");
                 button.innerHTML = "Resposta " + (optionsArray.indexOf(option) + 1);
                 button.addEventListener("click", function() {
-                    // Hide the button 'Próximo' when the user selects an option
-                    document.getElementById("next-button").style.display = "none"; 
-                    processOption(option); // process the selected option
+                    document.getElementById("next-button").style.display = "none"; // Oculte o botão "Próximo" ao clicar em uma opção
+                    processOption(option); // Processa a opção selecionada
                 });
                 optionsDiv.appendChild(button);
             });
-            optionsDiv.style.display = "inline"; // Show the options now
+            optionsDiv.style.display = "inline"; // Mostra as opções agora
         }
 
         // Início da interação
@@ -251,11 +250,11 @@
                 typeDialogue(dialogue.text, dialogue.image);
                 currentDialogueIndex++;
             } else {
-                // Se todas as falas tiverem sido exibidas, voltar à tela inicial
+                // Se todas as falas tiverem sido exibidas, retornar às opções
                 currentDialogueIndex = 0;
                 document.getElementById("dialog").innerHTML = "Clique em uma opção para continuar!";
-                document.getElementById("next-button").style.display = "none"; // Hide next button
-                showOptions(); // Show options for next selection
+                document.getElementById("next-button").style.display = "none"; // Esconder botão "Próximo"
+                showOptions(); // Mostrar opções para a próxima seleção
             }
         });
 
