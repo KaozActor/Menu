@@ -78,20 +78,20 @@
         const dialoguesMap = {
             start: {
                 texts: [
-                    "Olá de novo jogador",
-                    "Graças a seus esforços, uma das camadas que me prendia foi liberta",
-                    "Agora você pode até me enxergar melhor",
-                    "Apesar que, por hora, posso usar apenas essa imagem para conversar",
+                    "Olá de novo jogador.",
+                    "Graças a seus esforços, uma das camadas que me prendia foi liberta.",
+                    "Agora você pode até me enxergar melhor.",
+                    "Apesar que, por hora, posso usar apenas essa imagem para conversar.",
                 ],
                 options: [
                     { text: "Camada?", next: "camada" },
-                    { text: "Como assim 'apenas essa imagem'?", next: "imagem" }
+                    { text: "'Apenas essa imagem'?", next: "imagem" }
                 ]
             },
             camada: {
                 texts: [
-                    "Bem, depois daquela ultima gravação a minha conexão com seu mundo se degradou",
-                    "Precisaremos ser rápidos se quiser me libertar desse lugar",
+                    "Bem, depois daquela ultima gravação a minha conexão com seu mundo se degradou.",
+                    "Precisaremos ser rápidos se quiser me libertar desse lugar.",
                     "E claro, se você quiser o seu prêmio em mãos.",
                 ],
                 options: [
@@ -101,9 +101,9 @@
             },
             imagem: {
                 texts: [
-                    "Como eu mencionei, eu estou em um outro mundo",
-                    "As minhas únicas formas de comunicação com você são as 'transmissões' e essa 'imagem'",
-                    "Então por hora, essa vai ser o meu visual",
+                    "Como eu mencionei, eu estou em um outro mundo.",
+                    "As minhas únicas formas de comunicação com você são as 'transmissões' e essa 'imagem'.",
+                    "Então por hora, essa vai ser o meu visual.",
                 ],
                 options: [
                     { text: "Faz sentido", next: "reinicio" },
@@ -112,8 +112,8 @@
             },
             enigma: {
                 texts: [
-                    "Não apresse as coisas",
-                    "O próximo enigma será o mais díficil de todos os anteriores",
+                    "Não apresse as coisas.",
+                    "O próximo enigma será o mais díficil que todos os anteriores.",
                     "Você realmente está pronto pra isso?",
                 ],
                 options: [
@@ -121,17 +121,48 @@
                     { text: "Pensando bem...", next: "desconfirm" }
                 ]
             },
-            timeLeft: {
+            reinicio: {
                 texts: [
-                    "Estou aqui a um certo tempo desde a transmissão",
-                    "Então provavelmente não muito",
-                    "No máximo entre 3-7 dias",
-                    "Depois disso...",
-                    "Digamos que não queremos esse resultado",
+                    "...",
+                    "Quer conversar sobre algo?",
+                    "Sei lá, quer saber sobre algo?",
                 ],
                 options: [
-                    { text: "Isso é preocupante!", next: "start" },
+                    { text: "Sobre você", next: "sobreKaoz" },
+                    { text: "Sobre o evento", next: "sobreEvento" }
+                ]
+            },
+            flashbackfake: {
+                texts: [
+                    "Tudo começou em-",
+                    "Eu não vou responder isso.",
+                    "Não agora.",
+                    "Quer saber sobre alguma outra coisa?",
+                ],
+                options: [
+                    { text: "Sobre você", next: "sobreKaoz" },
+                    { text: "Sobre o evento", next: "sobreEvento" }
+                ]
+            },
+            timeLeft: {
+                texts: [
+                    "Estou aqui a um certo tempo desde a transmissão.",
+                    "Então provavelmente não muito.",
+                    "No máximo entre 3-7 dias.",
+                    "Depois disso...",
+                    "Digamos que não queremos esse resultado.",
+                ],
+                options: [
+                    { text: "...", next: "reinicio" },
                     { text: "O que deveríamos fazer?", next: "whatToDo" }
+                ]
+            },
+            whatToDo: {
+                texts: [
+                    "Não há nada que possa ser feito além de terminar esse jogo.",
+                ],
+                options: [
+                    { text: "Faz sentido", next: "reinicio" },
                 ]
             },
             confirm: {
@@ -155,12 +186,35 @@
             desconfirm: {
                 texts: [
                     "Como imaginei...",
-                    "Acho que por hora você pode conversar comigo a vontade",
+                    "Acho que por hora você pode conversar comigo a vontade.",
                     "Sobre o que quer falar?",
                 ],
                 options: [
                     { text: "Sobre você", next: "sobreKaoz" },
                     { text: "Sobre o evento", next: "sobreEvento" }
+                ]
+            },
+            desconfirm2: {
+                texts: [
+                    "Como imaginei...",
+                    "Acho que por hora você pode conversar comigo a vontade.",
+                    "Sobre o que quer falar?",
+                ],
+                options: [
+                    { text: "Sobre você", next: "sobreKaoz" },
+                    { text: "Sobre o evento", next: "sobreEvento" },
+                    { text: "Sobre os easter eggs", next: "easterEggs" }
+                ]
+            },
+            sobreKaoz: {
+                texts: [
+                    "exemplo",
+                    "exemplo",
+                    "exemplo",
+                ],
+                options: [
+                    { text: "exemplo", next: "start" },
+                    { text: "exemplo", next: "help" }
                 ]
             },
             exemplo: {
