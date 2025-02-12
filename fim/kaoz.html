@@ -80,24 +80,34 @@
                 texts: [
                     "Olá de novo jogador",
                     "Graças a seus esforços, uma das camadas que me prendia foi liberta",
-                    "Agora você pode até me enxergar melhor haha",
-                    "Apesar que por hora eu só consigo usar apenas essa imagem para conversar",
+                    "Agora você pode até me enxergar melhor",
+                    "Apesar que, por hora, posso usar apenas essa imagem para conversar",
                 ],
                 options: [
                     { text: "Camada?", next: "camada" },
-                    { text: "Como assim apenas essa imagem?", next: "imagem" }
+                    { text: "Como assim 'apenas essa imagem'?", next: "imagem" }
                 ]
             },
             camada: {
                 texts: [
-                    "Bem, depois daquela ultima gravação",
-                    "A minha conexão com seu mundo se degradou",
-                    "Precisaremos ser rápidos se quiser me libertar",
-                    "E claro, se você quiser o seu prêmio",
+                    "Bem, depois daquela ultima gravação a minha conexão com seu mundo se degradou",
+                    "Precisaremos ser rápidos se quiser me libertar desse lugar",
+                    "E claro, se você quiser o seu prêmio em mãos.",
                 ],
                 options: [
                     { text: "Qual o próximo Enigma?", next: "enigma" },
                     { text: "Quanto tempo temos?", next: "timeLeft" }
+                ]
+            },
+            imagem: {
+                texts: [
+                    "Como eu mencionei, eu estou em um outro mundo",
+                    "As minhas únicas formas de comunicação com você são as 'transmissões' e essa 'imagem'",
+                    "Então por hora, essa vai ser o meu visual",
+                ],
+                options: [
+                    { text: "Faz sentido", next: "reinicio" },
+                    { text: "Como você foi parar aí?", next: "flashbackfake" }
                 ]
             },
             enigma: {
@@ -124,6 +134,35 @@
                     { text: "O que deveríamos fazer?", next: "whatToDo" }
                 ]
             },
+            confirm: {
+                texts: [
+                    "Você tem certeza absoluta?",
+                ],
+                options: [
+                    { text: "Já falei que sim", next: "confirm2" },
+                    { text: "Pensando bem...", next: "desconfirm2" }
+                ]
+            },
+            confirm2: {
+                texts: [
+                    "Bem, então lhe desejo boa sorte, volte quando precisar de mim...",
+                    "Eis aqui o enigma derradeiro:",
+                ],
+                options: [
+                    { text: "*********", next: "fim" }
+                ]
+            },
+            desconfirm: {
+                texts: [
+                    "Como imaginei...",
+                    "Acho que por hora você pode conversar comigo a vontade",
+                    "Sobre o que quer falar?",
+                ],
+                options: [
+                    { text: "Sobre você", next: "sobreKaoz" },
+                    { text: "Sobre o evento", next: "sobreEvento" }
+                ]
+            },
             exemplo: {
                 texts: [
                     "exemplo",
@@ -133,47 +172,6 @@
                 options: [
                     { text: "exemplo", next: "start" },
                     { text: "exemplo", next: "help" }
-                ]
-            },
-            help: {
-                texts: [
-                    "Talvez o mago do vilarejo tenha alguma ideia.",
-                    "Ele é sábio e conhece muitos segredos.",
-                    "Vamos procurá-lo!",
-                ],
-                options: [
-                    { text: "Vamos procurá-lo!", next: "start" },
-                ]
-            },
-            legends: {
-                texts: [
-                    "As lendas falam de grandes heróis e batalhas épicas.",
-                    "De dragões e monstros, de magia e poder.",
-                    "É um mundo de sonhos e aventuras.",
-                ],
-                options: [
-                    { text: "Quais são as mais famosas?", next: "famousLegends" },
-                    { text: "Como essas lendas começaram?", next: "legendOrigin" }
-                ]
-            },
-            famousLegends: {
-                texts: [
-                    "Uma das lendas mais famosas é a de Aldorin, o Guerreiro das Sombras.",
-                    "Ele derrotou um dragão com apenas uma espada.",
-                    "É uma história incrível!",
-                ],
-                options: [
-                    { text: "Quero ouvir mais sobre isso.", next: "start" },
-                ]
-            },
-            legendOrigin: {
-                texts: [
-                    "As lendas começaram como contos passados de geração em geração.",
-                    "Foram escritas em livros e gravadas em pedras.",
-                    "São uma parte importante da nossa história.",
-                ],
-                options: [
-                    { text: "Isso é fascinante!", next: "start" },
                 ]
             },
         };
