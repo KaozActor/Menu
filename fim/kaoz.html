@@ -208,24 +208,33 @@
             },
             sobreKaoz: {
                 texts: [
-                    "exemplo",
-                    "exemplo",
-                    "exemplo",
+                    "Não tem muito o que precisa saber sobre mim.",
+                    "Apenas confie em mim e nós dois sairemos ganhando.",
+                    "Assim espero...",
                 ],
                 options: [
-                    { text: "exemplo", next: "start" },
-                    { text: "exemplo", next: "help" }
+                    { text: "Hora de acabar com isso...", next: "confirm2" }
                 ]
             },
-            exemplo: {
+            sobreEvento: {
                 texts: [
-                    "exemplo",
-                    "exemplo",
-                    "exemplo",
+                    "Esse evento não é nada mais que uma troca.",
+                    "Vocês destravam as 7 trancas(Os enigmas) para me libertar.",
+                    "Desses 7, já foram resolvidos 6, então esse é o último.",
                 ],
                 options: [
-                    { text: "exemplo", next: "start" },
-                    { text: "exemplo", next: "help" }
+                    { text: "Hora de acabar com isso...", next: "confirm2" }
+                ]
+            },
+            easterEggs: {
+                texts: [
+                    "O dev deixou alguns easter eggs durante o jogo, que podem ser achados se você procurar bem.",
+                    "Por exemplo as entradas numeradas(entrada0, entrada1, etc).",
+                    "Mas uma das melhores é a nomeada como 'Crackudo' KAKAKKAKA",
+                ],
+                options: [
+                    { text: "Vou testar", next: "reinicio" },
+                    { text: "Bruh", next: "reinicio" }
                 ]
             },
         };
