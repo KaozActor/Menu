@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaoz</title>
+    <title>Kaoz RPG</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -12,7 +12,6 @@
             background-color: #fafafa;
             color: #333;
             padding: 20px;
-            position: relative; /* Necessário para o posicionamento absoluto dos botões */
         }
 
         h1 {
@@ -36,11 +35,7 @@
             background-color: #fff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             max-width: 80%;
-        }
-
-        #options {
-            margin-top: 20px;
-            display: none; /* Hide the options initially */
+            min-height: 50px; /* Para evitar mudar de altura durante a digitação */
         }
 
         button {
@@ -52,7 +47,6 @@
             font-size: 1em;
             cursor: pointer;
             margin: 5px;
-            transition: background-color 0.3s;
         }
 
         button:hover {
@@ -64,200 +58,191 @@
             font-size: 0.9em;
             color: #777;
         }
-
-        #next-button {
-            position: absolute;  /* Posicionamento absoluto */
-            bottom: 20px;        /* Posição fixada na parte inferior */
-            right: 20px;         /* Margem à direita */
-            display: none;       /* Oculte inicialmente */
-        }
     </style>
 </head>
 
 <body>
 
-    <h1>Kaoz</h1>
+    <h1>Kaoz RPG</h1>
     <img id="char-image" src="assets/imagens/personagem1.png" alt="Personagem">
-    <div id="dialog">Clique em uma opção para começar!</div>
-    <div id="options"></div>
-    <button id="next-button">Próximo</button>
-
+    <div id="dialog">Clique em "Iniciar" para começar a conversa!</div>
+    <button id="start-button">Iniciar</button>
+    <div id="options-container"></div>
+    <div id="next-button-container"></div>
+    
     <footer>
-        <p>© 2025 Kaoz</p>
+        <p> 2025 Kaoz</p>
     </footer>
 
     <script>
-        // Objeto que relaciona entradas e diálogos
         const dialoguesMap = {
-            // Diálogo inicial
-            "inicial": [
-                {
-                    text: "Olá! Estou feliz que você está aqui.",
-                    image: "assets/imagens/personagem1.png"
-                },
-                {
-                    text: "Qual opção você deseja?",
-                    image: "assets/imagens/personagem1.png"
-                }
-            ],
-            // Opção 1
-            "opcao1": [
-                {
-                    text: "Você escolheu a opção 1.",
-                    image: "assets/imagens/personagem1.png",
-                },
-                {
-                    text: "Isso é interessante! Vamos falar mais sobre isso.",
-                    image: "assets/imagens/personagem1.png",
-                },
-            ],
-            // Ramificação da Opção 1
-            "opcao1-nova": [
-                {
-                    text: "Esta é uma nova ramificação da opção 1.",
-                    image: "assets/imagens/personagem2.png"
-                },
-                {
-                    text: "Você gostaria de explorar mais?",
-                    image: "assets/imagens/personagem1.png",
-                }
-            ],
-            // Opção 2
-            "opcao2": [
-                {
-                    text: "Você escolheu a opção 2.",
-                    image: "assets/imagens/personagem1.png",
-                },
-                {
-                    text: "Essa decisão pode mudar muito!",
-                    image: "assets/imagens/personagem2.png",
-                },
-            ],
-            // Ramificação da Opção 2
-            "opcao2-nova": [
-                {
-                    text: "Esta é a nova ramificação da opção 2.",
-                    image: "assets/imagens/personagem2.png"
-                },
-                {
-                    text: "Você quer saber mais sobre isso?",
-                    image: "assets/imagens/personagem1.png",
-                }
-            ],
-            // Opção 3
-            "opcao3": [
-                {
-                    text: "Você escolheu a opção 3.",
-                    image: "assets/imagens/personagem1.png",
-                },
-                {
-                    text: "Isso leva a um caminho diferente.",
-                    image: "assets/imagens/personagem2.png",
-                },
-            ]
+            start: {
+                texts: [
+                    "Oi, sou Kaoz! O que você quer discutir hoje?",
+                    "Estou aqui para ajudar com qualquer dúvida ou só para conversar.",
+                    "O mundo de Eridoria é vasto e cheio de mistérios.",
+                ],
+                options: [
+                    { text: "Sobre a segurança do vilarejo.", next: "security" },
+                    { text: "Sobre as lendas do passado.", next: "legends" }
+                ]
+            },
+            security: {
+                texts: [
+                    "A segurança do vilarejo tem sido uma preocupação.",
+                    "Há rumores de criaturas sombrias nas proximidades.",
+                    "Mas nossos guardiões são bravos e vigilantes.",
+                ],
+                options: [
+                    { text: "Quem está cuidando da proteção?", next: "guardians" },
+                    { text: "Há algum perigo iminente?", next: "danger" }
+                ]
+            },
+            guardians: {
+                texts: [
+                    "Os guardiões do vilarejo são valorosos.",
+                    "Eles patrulham a área todos os dias, sem descanso.",
+                    "Sua dedicação é inspiradora.",
+                ],
+                options: [
+                    { text: "Isso é bom de saber!", next: "start" },
+                    { text: "E se eles não estivessem aqui?", next: "noGuardians" }
+                ]
+            },
+            danger: {
+                texts: [
+                    "Parece que há rumores de uma criatura na floresta.",
+                    "Alguns dizem que é um lobo, outros um dragão.",
+                    "Mas nada foi confirmado.",
+                ],
+                options: [
+                    { text: "Isso é preocupante!", next: "start" },
+                    { text: "O que deveríamos fazer?", next: "whatToDo" }
+                ]
+            },
+            noGuardians: {
+                texts: [
+                    "Se eles não estivessem aqui, o vilarejo estaria em grande risco!",
+                    "Seria um desastre!",
+                    "Mas, felizmente, isso não é o caso.",
+                ],
+                options: [
+                    { text: "Precisamos fazer algo sobre isso!", next: "start" },
+                    { text: "Quem pode nos ajudar?", next: "help" }
+                ]
+            },
+            help: {
+                texts: [
+                    "Talvez o mago do vilarejo tenha alguma ideia.",
+                    "Ele é sábio e conhece muitos segredos.",
+                    "Vamos procurá-lo!",
+                ],
+                options: [
+                    { text: "Vamos procurá-lo!", next: "start" },
+                ]
+            },
+            legends: {
+                texts: [
+                    "As lendas falam de grandes heróis e batalhas épicas.",
+                    "De dragões e monstros, de magia e poder.",
+                    "É um mundo de sonhos e aventuras.",
+                ],
+                options: [
+                    { text: "Quais são as mais famosas?", next: "famousLegends" },
+                    { text: "Como essas lendas começaram?", next: "legendOrigin" }
+                ]
+            },
+            famousLegends: {
+                texts: [
+                    "Uma das lendas mais famosas é a de Aldorin, o Guerreiro das Sombras.",
+                    "Ele derrotou um dragão com apenas uma espada.",
+                    "É uma história incrível!",
+                ],
+                options: [
+                    { text: "Quero ouvir mais sobre isso.", next: "start" },
+                ]
+            },
+            legendOrigin: {
+                texts: [
+                    "As lendas começaram como contos passados de geração em geração.",
+                    "Foram escritas em livros e gravadas em pedras.",
+                    "São uma parte importante da nossa história.",
+                ],
+                options: [
+                    { text: "Isso é fascinante!", next: "start" },
+                ]
+            },
         };
 
-        let currentDialogueIndex = 0;
-        let currentDialogues = [];
-        let isTyping = false; // Flag para verificar se o texto está sendo digitado
+        let currentDialogue = {};
+        let currentTextIndex = 0;
+        let currentCharIndex = 0;
+        let typingInterval;
 
-        function showDialogue(dialogues) {
-            currentDialogues = dialogues;
-            currentDialogueIndex = 0;
-            typeDialogue(currentDialogues[currentDialogueIndex].text, currentDialogues[currentDialogueIndex].image);
+        document.getElementById("start-button").addEventListener("click", function () {
+            this.disabled = true; // Desabilita o botão "Iniciar"
+            loadDialogue('start');
+        });
+
+        function loadDialogue(key) {
+            currentDialogue = dialoguesMap[key];
+            currentTextIndex = 0;
+            showNextText();
         }
 
-        function typeDialogue(text, image) {
-            document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
-            let index = 0;
-            const typingSpeed = 35; // Velocidade de digitação em milissegundos
-            isTyping = true; // Define a flag de digitação como verdadeira
+        function showNextText() {
+            // Limpa opções anteriores
+            document.getElementById("options-container").innerHTML = "";
+            if (currentTextIndex < currentDialogue.texts.length) {
+                currentCharIndex = 0;
+                const text = currentDialogue.texts[currentTextIndex];
+                document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo anterior
+                typeText(text); // Inicia a digitação do texto
+            } else {
+                showOptions(currentDialogue.options);
+            }
+        }
 
-            document.getElementById("next-button").style.display = "none"; // Oculta o botão "Próximo" enquanto digita
-            document.getElementById("options").style.display = "none"; // Oculta as opções enquanto digita
-
-            function typeCharacter() {
-                if (index < text.length) {
-                    document.getElementById("dialog").innerHTML += text.charAt(index);
-                    index++;
-                    setTimeout(typeCharacter, typingSpeed);
-                } else {
-                    isTyping = false; // Finalizou a digitação
-                    document.getElementById("char-image").src = image; // Troca de imagem
-                    document.getElementById("next-button").style.display = "inline"; // Mostra o botão "Próximo" após a digitação
+        function typeText(text) {
+            clearInterval(typingInterval); // Limpa o intervalo anterior
+            typingInterval = setInterval(() => {
+                document.getElementById("dialog").innerHTML += text[currentCharIndex];
+                currentCharIndex++;
+                if (currentCharIndex >= text.length) {
+                    clearInterval(typingInterval); // Para o efeito de digitação
+                    showNextTextButton();
                 }
-            }
-
-            typeCharacter(); // Inicia a digitação
+            }, 35); // Ajuste a velocidade da digitação aqui
         }
 
-        function processOption(option) {
-            const selectedDialogue = dialoguesMap[option] || [];
-            showDialogue(selectedDialogue);
-        }
-
-        function showOptions() {
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = ""; // Limpa opções anteriores
-
-            // Crie um array de opções disponíveis
-            const optionsArray = ["opcao1", "opcao2", "opcao3"];
-            optionsArray.forEach(option => {
-                const button = document.createElement("button");
-                button.innerHTML = "Resposta " + (optionsArray.indexOf(option) + 1);
-                button.addEventListener("click", function() {
-                    document.getElementById("next-button").style.display = "none"; // Oculte o botão "Próximo" ao clicar em uma opção
-                    processOption(option); // Processa a opção selecionada
-                });
-                optionsDiv.appendChild(button);
+        function showNextTextButton() {
+            const nextButtonContainer = document.getElementById("next-button-container");
+            nextButtonContainer.innerHTML = ""; // Limpa botão anterior
+            const nextButton = document.createElement("button");
+            nextButton.innerText = "Próximo";
+            nextButton.addEventListener("click", () => {
+                currentTextIndex++;
+                showNextText();
             });
-            optionsDiv.style.display = "inline"; // Mostra as opções agora
+            nextButtonContainer.appendChild(nextButton);
         }
 
-        // Início da interação
-        showDialogue(dialoguesMap["inicial"]); // Inicia com o diálogo inicial
+        function showOptions(options) {
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = ""; // Limpa opções anteriores
+            const nextButtonContainer = document.getElementById("next-button-container");
+            nextButtonContainer.innerHTML = ""; // Limpa botão "Próximo"
 
-        // Inicialização do áudio
-        const musicAudio = document.createElement('audio');
-        musicAudio.src = 'assets/audios/música-de-fundo.mp3';
-        musicAudio.loop = true;
-        document.body.appendChild(musicAudio);
-        musicAudio.play(); // Iniciar a música
+            // Reabilita o botão iniciar quando as opções são mostradas
+            document.getElementById("start-button").disabled = false;
 
-        // Controle de música
-        let musicPlaying = true;
-
-        // Botão de música
-        const musicButton = document.createElement('button');
-        musicButton.innerHTML = 'Pausar Música';
-        document.body.appendChild(musicButton);
-
-        musicButton.addEventListener("click", function() {
-            if (musicPlaying) {
-                musicAudio.pause();
-                this.textContent = "Reproduzir Música"; // Mudar texto do botão
-            } else {
-                musicAudio.play();
-                this.textContent = "Pausar Música"; // Mudar texto do botão
-            }
-            musicPlaying = !musicPlaying; // Alternar estado
-        });
-
-        // Botão "Próximo" para avançar os diálogos
-        document.getElementById("next-button").addEventListener("click", function() {
-            if (currentDialogueIndex < currentDialogues.length) {
-                const dialogue = currentDialogues[currentDialogueIndex];
-                typeDialogue(dialogue.text, dialogue.image);
-                currentDialogueIndex++;
-            } else {
-                // Se todas as falas tiverem sido exibidas, retornar às opções
-                currentDialogueIndex = 0;
-                document.getElementById("dialog").innerHTML = "Clique em uma opção para continuar!";
-                document.getElementById("next-button").style.display = "none"; // Esconder botão "Próximo"
-                showOptions(); // Mostrar opções para a próxima seleção
-            }
-        });
-
+            options.forEach(option => {
+                const button = document.createElement("button");
+                button.innerText = option.text;
+                button.addEventListener("click", () => loadDialogue(option.next));
+                optionsContainer.appendChild(button);
+            });
+        }
     </script>
 </body>
 </html>
