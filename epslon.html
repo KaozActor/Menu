@@ -1,0 +1,296 @@
+<!-- Início do documento HTML -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epslon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background-color: #fafafa;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #66CCCC; /* Cor personalizada para Epslon */
+            margin-bottom: 20px;
+        }
+
+        #char-image {
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #dialog {
+            margin: 20px auto;
+            font-size: 1.2em;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 300px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #66CCCC; /* Cor personalizada para Epslon */
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #66CCCC; /* Cor personalizada para Epslon */
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4CAF50; /* Cor personalizada para Epslon */
+        }
+
+        #next-button {
+            display: none;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Epslon</h1>
+    <img id="char-image" src="assets/imagens/personagem3.png" alt="Personagem">
+    <div id="dialog">Digite uma palavra chave para começar!</div>
+    <input type="text" id="input-word" placeholder="Digite '/ajuda' se estiver travado em um enigma" autofocus>
+    <button id="submit-button">Enviar</button>
+    <button id="next-button">Próximo</button>
+    <button id="music-button">Reproduzir Música</button>
+
+    <footer>
+        <p> © 2024 Epslon </p>
+    </footer>
+
+    <script>
+        // Objeto que relaciona palavras chave e diálogos
+        const dialoguesMap = {
+            "facada": [
+                {
+                    text: "Segundo meu banco de dados, essa palavra deve ser usado em outro lugar",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                }
+            ],
+            "entrada0": [
+                {
+                    text: "Entrada número 0",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "Kaoz está constantemente falando sobre um tal experimento.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "Ao que parece, está tudo indo como os planos.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                }
+            ],
+            "entrada1": [
+                {
+                    text: "Entrada número 1",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "A fase 2 do plano está prestes a ser executada, disse ele.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "Mas até agora ele não revelou o que ********* significa",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                }
+            ],
+            "entrada2": [
+                {
+                    text: "'Entrada número 2'",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "'Esse lugar é tão sozinho...'",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "'Talvez eu devesse criar alguém para me auxiliar.'",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "'O nome dele será EPSLON...'",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null
+                },
+            ],
+            "nexus": [
+                {
+                    text: "Ao que minhas informações constam.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+                {
+                    text: "Nexus parece ser um protegido de Kaoz.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null // Sem áudio
+                },
+            ],
+            "/ajuda": [
+                {
+                    text: "Uma boa forma de começar é testando todas as suas palavras chave até o momento.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null
+                },
+                {
+                    text: "Basta digitar a palavra chave e pressionar o botão 'Enviar'.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null
+                },
+                {
+                    text: "Usar suas palavras chave tem resultado diferentes resultados em cada aba.",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null
+                },
+                {
+                    text: "Isso é tudo por enquanto...",
+                    image: "assets/imagens/personagem3.png",
+                    audio: null
+                }
+            ],
+            // Adicione mais palavras e diálogos aqui
+        };
+        let currentDialogueIndex = 0;
+        let currentDialogues = [];
+
+        document.getElementById("submit-button").addEventListener("click", function () {
+            const inputWord = document.getElementById("input-word").value.toLowerCase();
+            if (dialoguesMap[inputWord]) {
+                // Se a palavra chave for válida
+                currentDialogues = dialoguesMap[inputWord];
+                currentDialogueIndex = 0;
+                // Inicia a digitação da mensagem
+                typeDialogue(currentDialogues[0].text, currentDialogues[0].audio);
+                document.getElementById("next-button").style.display = "inline";
+                document.getElementById("input-word").value = ""; // Limpar o campo de entrada
+            } else if (inputWord === "/ajuda") {
+                // Comando /ajuda
+                currentDialogues = dialoguesMap["/ajuda"];
+                currentDialogueIndex = 0;
+                typeDialogue(currentDialogues[0].text, currentDialogues[0].audio);
+            } else {
+                // Substituir o alert por uma mensagem no dialog
+                document.getElementById("dialog").innerHTML = "Palavra chave inválida! Tente novamente.";
+                document.getElementById("input-word").value = ""; // Limpar o campo de entrada
+
+                // Fazer a mensagem desaparecer após 3 segundos
+                setTimeout(() => {
+                    document.getElementById("dialog").innerHTML = "Digite uma palavra chave para começar!";
+                }, 3000);
+            }
+        });
+
+        document.getElementById("next-button").addEventListener("click", function () {
+            currentDialogueIndex++;
+            if (currentDialogueIndex < currentDialogues.length) {
+                const dialogue = currentDialogues[currentDialogueIndex];
+                typeDialogue(dialogue.text, dialogue.audio);
+            } else {
+                // Voltar à tela inicial sem recarregar a página
+                currentDialogueIndex = 0;
+                currentDialogues = [];
+                document.getElementById("dialog").innerHTML = "Digite uma palavra chave para começar!";
+                document.getElementById("char-image").src = "assets/imagens/personagem1.png"; // Imagem inicial corrigida
+                document.getElementById("next-button").style.display = "none";
+                document.getElementById("input-word").focus(); // Foco no campo de entrada
+            }
+        });
+
+        function typeDialogue(text, audioSrc) {
+            document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo atual
+            let index = 0;
+            const typingSpeed = 35; // Velocidade de digitação em milissegundos
+
+            // Toca o áudio do narrador assim que a função é chamada, se estiver definido
+            if (audioSrc) {
+                const audio = new Audio(audioSrc);
+                audio.play();
+            }
+
+            function typeCharacter() {
+                if (index < text.length) {
+                    document.getElementById("dialog").innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(typeCharacter, typingSpeed);
+                }
+            }
+
+            typeCharacter();  // Inicia a digitação
+            document.getElementById("char-image").src = currentDialogues[currentDialogueIndex].image; // Troca de imagem
+        }
+
+        // Para ocultar o botão "próximo" inicialmente
+        document.getElementById("next-button").style.display = "none";
+
+        // Inicialização do áudio
+        const musicAudio = document.createElement('audio');
+        musicAudio.src = 'assets/audios/música-de-fundo.mp3';
+        musicAudio.loop = true;
+        document.body.appendChild(musicAudio);
+
+        // Controle de música
+        let musicPlaying = false;
+
+        document.getElementById("music-button").addEventListener("click", function() {
+            if (musicPlaying) {
+                musicAudio.pause();
+                this.textContent = "Reproduzir Música"; // Mudar texto do botão
+            } else {
+                musicAudio.play();
+                this.textContent = "Pausar Música"; // Mudar texto do botão
+            }
+            musicPlaying = !musicPlaying; // Alternar estado
+        });
+
+    </script>
+</body>
+
+</html>
