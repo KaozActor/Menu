@@ -135,8 +135,8 @@
                     "Não acho que você quer arriscar seu prémio.",
                 ],
                 options: [
-                    { text: "Faz sentido", next: "camada" },
-                    { text: "Beleza então", next: "imagem" }
+                    { text: "Faz sentido", next: "restart" },
+                    { text: "Beleza então", next: "restart" }
                 ]
             },
             IaUse2: {
@@ -144,8 +144,8 @@
                     "Qualquer momento, contanto que ela apenas seja ferramenta, e não a própria resolução.",
                 ],
                 options: [
-                    { text: "Entendido", next: "camada" },
-                    { text: "Ok", next: "imagem" }
+                    { text: "Entendido", next: "restart" },
+                    { text: "Ok", next: "restart" }
                 ]
             },
             historyDuvida: {
@@ -156,14 +156,75 @@
                     { text: "Próximo", next: "history" }
                 ]
             },
-            exemplo: {
+            desafios: {
                 texts: [
-                    "exemplo",
-                    "exemplo",
+                    "Pois bem, já que está tão animado, tenho que lhe contar.",
+                    "Essa fase será multiplayer.",
+                    "Então tomara que você seja bom com trabalho em equipe kkk",
                 ],
                 options: [
-                    { text: "exemplo", next: "camada" },
-                    { text: "exemplo", next: "imagem" }
+                    { text: "E se eu estiver sozinho?", next: "alone" },
+                    { text: "...", next: "fim" }
+                ]
+            },
+            alone: {
+                texts: [
+                    "Você não estará.",
+                    "Pode confiar.",
+                ],
+                options: [
+                    { text: "...", next: "fim" }
+                ]
+            },
+            history1.1: {
+                texts: [
+                    "Estou tentando dizer que, assim que vocês terminarem os enigmas eu finalmente sairei desse lugar.",
+                    "E você enfim ganhará sua recompensa.",
+                ],
+                options: [
+                    { text: "E o que seria essa recompensa?", next: "recompensa" },
+                    { text: "E se eu perder?", next: "nahYouDWin" }
+                ]
+            },
+            recompensa: {
+                texts: [
+                    "Por hora vai ser segredo, mas com certeza vai te agradar",
+                ],
+                options: [
+                    { text: "Bruh", next: "restart" },
+                    { text: "BruhV2", next: "easterEgg" }
+                ]
+            },
+            nahYouDWin: {
+                texts: [
+                    "Nah, você consegue.",
+                    "Se não conseguir, fud-",
+                    "...",
+                ],
+                options: [
+                    { text: "hurB", next: "restart" },
+                    { text: "rBhu", next: "restart" }
+                ]
+            },
+            restart: {
+                texts: [
+                    "Quer saber de mais o algo?",
+                ],
+                options: [
+                    { text: "Regras do evento", next: "eventRules" },
+                    { text: "Fases do evento", next: "eventPhase" },
+                    { text: "História", next: "history" }
+                ]
+            },
+            fim: {
+                texts: [
+                    "Enfim, não vou alongar muito essa conversa.",
+                    "Assim que terminar de ver o que precisa ver aqui, volte para o chat.",
+                    "Para o organizador saber que você já leu isso é só falar 'Itadakimasu' no chat.",
+                    "cOmFiA",
+                ],
+                options: [
+                    { text: "SUS", next: "restart" }
                 ]
             },
         };
