@@ -84,8 +84,78 @@
                     "Vou deixar você escolher por onde quer começar",
                 ],
                 options: [
-                    { text: "Camada?", next: "camada" },
-                    { text: "'Apenas essa imagem'?", next: "imagem" }
+                    { text: "Regras do evento", next: "eventRules" },
+                    { text: "Fases do evento", next: "eventPhase" },
+                    { text: "História", next: "history" }
+                ]
+            },
+            eventRules: {
+                texts: [
+                    "Como eu falei no vídeo, não me importo com os meios usados pra chegar no resultado.",
+                    "Meu único incomodo é caso alguém use meios de pular etapas.",
+                    "Como por exemplo a própria IA.",
+                ],
+                options: [
+                    { text: "Mas você disse que podia usar", next: "IaUse" },
+                    { text: "E quando é válido usar?", next: "IaUse2" }
+                ]
+            },
+            eventPhase: {
+                texts: [
+                    "Bem, esse evento é dividido em fases como você pode observar.",
+                    "Atualmente estamos na fase 2.",
+                    "Acredito que isso não vai se extender mais do que 3 fases.",
+                    "Mas no final, nem eu sou capaz de saber.",
+                ],
+                options: [
+                    { text: "E porque não saberia?", next: "historyDuvida" },
+                    { text: "Que venham os próximos desafios", next: "desafios" }
+                ]
+            },
+            history: {
+                texts: [
+                    "Essa é parte mais importante dessa conversa.",
+                    "Mas vou tentar contextualizar bem.",
+                    "Digamos que uns caras me prenderam em um lugar não muito agradável.",
+                    "Esse lugar é chamado "Cyber-Void"",
+                    "Desde então, tenho tentado escapar daqui de todas as formas possíveis."
+                    "Sem sucesso.",
+                    "Mas, depois da conexão que consegui com seu mundo, acredito que podemos resolver isso juntos.",
+                ],
+                options: [
+                    { text: "O que voce quer dizer com isso?", next: "history1.1" },
+                    { text: "Aonde quer chegar...", next: "history1.2" }
+                ]
+            },
+            IaUse: {
+                texts: [
+                    "Quero dizer, não é proibido, mas como ferramenta.",
+                    "Qualquer método que pule a parte de descoberta quebra o fluxo dos enigmas.",
+                    "Além disso, daqui pra frente, alguns enigmas serão imunes a IA.",
+                    "Não acho que você quer arriscar seu prémio.",
+                ],
+                options: [
+                    { text: "Faz sentido", next: "camada" },
+                    { text: "Beleza então", next: "imagem" }
+                ]
+            },
+            IaUse2: {
+                texts: [
+                    "Qualquer momento, contanto que ela apenas seja ferramenta, e não a própria resolução.",
+                ],
+                options: [
+                    { text: "Entendido", next: "camada" },
+                    { text: "Ok", next: "imagem" }
+                ]
+            },
+            historyDuvida: {
+                texts: [
+                    "exemplo",
+                    "exemplo",
+                ],
+                options: [
+                    { text: "exemplo", next: "camada" },
+                    { text: "exemplo", next: "imagem" }
                 ]
             },
             exemplo: {
