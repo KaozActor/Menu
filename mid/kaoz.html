@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaoz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background-color: #fafafa;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #6a5acd;
+            margin-bottom: 20px;
+        }
+
+        #char-image {
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #dialog {
+            margin: 20px auto;
+            font-size: 1.2em;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+            min-height: 50px; /* Para evitar mudar de altura durante a digitação */
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6a5acd;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #574bde;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Kaoz</h1>
+    <img id="char-image" src="personagem1.png" alt="Personagem">
+    <div id="dialog">Clique em "Iniciar" quando estiver pronto</div>
+    <button id="start-button">Iniciar</button>
+    <div id="options-container"></div>
+    <div id="next-button-container"></div>
+    
+    <footer>
+        <p>© 2025 Kaoz</p>
+    </footer>
+
+    <script>
+        const dialoguesMap = {
+            start: {
+                texts: [
+                    "Olá de novo jogador.",
+                    "Hoje estou aqui para esclarecer algumas coisas.",
+                    "Desde um pouco de contexto, até mais detalhes sobre as regras.",
+                    "Vou deixar você escolher por onde quer começar",
+                ],
+                options: [
+                    { text: "Camada?", next: "camada" },
+                    { text: "'Apenas essa imagem'?", next: "imagem" }
+                ]
+            },
+            exemplo: {
+                texts: [
+                    "exemplo",
+                    "exemplo",
+                ],
+                options: [
+                    { text: "exemplo", next: "camada" },
+                    { text: "exemplo", next: "imagem" }
+                ]
+            },
+        };
+
+        let currentDialogue = {};
+        let currentTextIndex = 0;
+        let currentCharIndex = 0;
+        let typingInterval;
+
+        document.getElementById("start-button").addEventListener("click", function () {
+            this.disabled = true; // Desabilita o botão "Iniciar"
+            loadDialogue('start');
+        });
+
+        function loadDialogue(key) {
+            currentDialogue = dialoguesMap[key];
+            currentTextIndex = 0;
+            showNextText();
+        }
+
+        function showNextText() {
+            // Limpa opções anteriores
+            document.getElementById("options-container").innerHTML = "";
+            if (currentTextIndex < currentDialogue.texts.length) {
+                currentCharIndex = 0;
+                const text = currentDialogue.texts[currentTextIndex];
+                document.getElementById("dialog").innerHTML = ""; // Limpa o diálogo anterior
+                typeText(text); // Inicia a digitação do texto
+            } else {
+                showOptions(currentDialogue.options);
+            }
+        }
+
+        function typeText(text) {
+            clearInterval(typingInterval); // Limpa o intervalo anterior
+            typingInterval = setInterval(() => {
+                document.getElementById("dialog").innerHTML += text[currentCharIndex];
+                currentCharIndex++;
+                if (currentCharIndex >= text.length) {
+                    clearInterval(typingInterval); // Para o efeito de digitação
+                    showNextTextButton();
+                }
+            }, 35); // Ajuste a velocidade da digitação aqui
+        }
+
+        function showNextTextButton() {
+            const nextButtonContainer = document.getElementById("next-button-container");
+            nextButtonContainer.innerHTML = ""; // Limpa botão anterior
+            const nextButton = document.createElement("button");
+            nextButton.innerText = "Próximo";
+            nextButton.addEventListener("click", () => {
+                currentTextIndex++;
+                showNextText();
+            });
+            nextButtonContainer.appendChild(nextButton);
+        }
+
+        function showOptions(options) {
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = ""; // Limpa opções anteriores
+            const nextButtonContainer = document.getElementById("next-button-container");
+            nextButtonContainer.innerHTML = ""; // Limpa botão "Próximo"
+
+            // Reabilita o botão iniciar quando as opções são mostradas
+            document.getElementById("start-button").disabled = false;
+
+            options.forEach(option => {
+                const button = document.createElement("button");
+                button.innerText = option.text;
+                
+                // Verifica se a opção é para redirecionar para o enigma final
+                if (option.next === "fim") {
+                    button.addEventListener("click", () => {
+                        window.location.href = "biblioteca.html"; // Redireciona para biblioteca.html
+                    });
+                } else {
+                    button.addEventListener("click", () => loadDialogue(option.next));
+                }
+
+                optionsContainer.appendChild(button);
+            });
+        }
+    </script>
+</body>
+</html>
 
