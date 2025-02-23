@@ -35,7 +35,7 @@
             background-color: #fff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             max-width: 80%;
-            min-height: 50px;
+            min-height: 50px; /* Para evitar mudar de altura durante a digitação */
         }
 
         button {
@@ -186,6 +186,16 @@
                     { text: "E se eu perder?", next: "nahYouDWin" }
                 ]
             },
+            history1_2: {
+                texts: [
+                    "Sendo direto, você resolve os enigmas, me liberta, e ganha o sua recompensa.",
+                    "Bom pra nós dois certo?",
+                ],
+                options: [
+                    { text: "E o que seria essa recompensa?", next: "recompensa" },
+                    { text: "E se eu perder?", next: "nahYouDWin" }
+                ]
+            },
             recompensa: {
                 texts: [
                     "Por hora vai ser segredo, mas com certeza vai te agradar",
@@ -285,6 +295,8 @@
         function showOptions(options) {
             const optionsContainer = document.getElementById("options-container");
             optionsContainer.innerHTML = ""; // Limpa opções anteriores
+            const nextButtonContainer = document.getElementById("next-button-container");
+            nextButtonContainer.innerHTML = ""; // Limpa botão "Próximo"
 
             // Reabilita o botão iniciar quando as opções são mostradas
             document.getElementById("start-button").disabled = false;
