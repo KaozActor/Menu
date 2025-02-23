@@ -102,82 +102,78 @@
                 {
                     text: "Bela tentativa, mas está no local errado",
                     image: "assets/imagens/personagem2.png",
-                    audio: null // Sem áudio
-                },
+                    audio: null
+                }
+            ],
             "facada": [
                 {
                     text: "Bem, essa palavra não será tão útil por aqui",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "Muito menos agora, então por hora apenas aguarde",
                     image: "assets/imagens/personagem2.png",
-                    audio: null // Sem áudio  // Adicione o arquivo de áudio se quiser
+                    audio: null
                 }
             ],
             "entrada0": [
                 {
                     text: "Parece que o experimento funcionou uh?",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "Bem, essa vai ser a entrada número 0",
                     image: "assets/imagens/personagem2.png",
-                    audio: null // Sem áudio
-                },
-                {
-                    text: "Entrada número 0: O experimento foi um sucesso",
-                    image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 }
             ],
             "entrada1": [
                 {
                     text: "Entrada número 1",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "A fase 2 do plano está prestes a ser executada",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "Por sorte, o experimento ainda não descobriu sobre o *********",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 }
             ],
             "entrada2": [
                 {
                     text: "Entrada número 2",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "Esse lugar é tão sozinho...",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "Talvez eu devesse prend-",
                     image: "assets/imagens/personagem2.png",
-                    audio: null // Sem áudio
+                    audio: null
                 },
                 {
                     text: "NÃO OUSE LER MINHAS ANOTAÇÕES!",
                     image: "assets/imagens/jump.png",
                     audio: "assets/audios/entrada2.m4a"
-                },
+                }
             ],
             "nexus": [
                 {
                     text: "Não mencione esse nome outra vez...",
                     image: "assets/imagens/jump.png",
-                    audio: null // Sem áudio
-                },
+                    audio: null
+                }
             ],
             "crackudo": [
                 {
@@ -190,37 +186,33 @@
                 {
                     text: "O homem que fala pelas mãos",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
-                },
+                    audio: null
+                }
             ],
             "doutor-wd": [
                 {
                     text: "Eu já falei sobre esse cara...",
                     image: "assets/imagens/personagem1.png",
-                    audio: null // Sem áudio
-                },
-            ],
-            // Adicione mais palavras e diálogos aqui
+                    audio: null
+                }
+            ]
         };
+
         let currentDialogueIndex = 0;
         let currentDialogues = [];
 
         document.getElementById("submit-button").addEventListener("click", function () {
             const inputWord = document.getElementById("input-word").value.toLowerCase();
             if (dialoguesMap[inputWord]) {
-                // Se a palavra chave for válida
                 currentDialogues = dialoguesMap[inputWord];
                 currentDialogueIndex = 0;
-                // Inicia a digitação da mensagem
                 typeDialogue(currentDialogues[0].text, currentDialogues[0].audio);
                 document.getElementById("next-button").style.display = "inline";
                 document.getElementById("input-word").value = ""; // Limpar o campo de entrada
             } else {
-                // Substituir o alert por uma mensagem no dialog
                 document.getElementById("dialog").innerHTML = "Palavra chave inválida! Tente novamente.";
                 document.getElementById("input-word").value = ""; // Limpar o campo de entrada
 
-                // Fazer a mensagem desaparecer após 3 segundos
                 setTimeout(() => {
                     document.getElementById("dialog").innerHTML = "Digite uma palavra chave para começar!";
                 }, 3000);
@@ -233,7 +225,6 @@
                 const dialogue = currentDialogues[currentDialogueIndex];
                 typeDialogue(dialogue.text, dialogue.audio);
             } else {
-                // Voltar à tela inicial sem recarregar a página
                 currentDialogueIndex = 0;
                 currentDialogues = [];
                 document.getElementById("dialog").innerHTML = "Digite uma palavra chave para começar!";
@@ -288,8 +279,6 @@
             }
             musicPlaying = !musicPlaying; // Alternar estado
         });
-
     </script>
 </body>
-
 </html>
