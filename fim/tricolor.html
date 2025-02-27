@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enigma das Cores</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .slot {
+            width: 100px;
+            height: 30px;
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .colorDisplay {
+            width: 100px;
+            height: 30px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .hidden { display: none; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        #nextLevel { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>. . .</h1>
+    <p>Preencha os slots com os códigos hexadecimais:</p>
+
+    <input type="text" class="slot" id="slot1" placeholder="Insira aqui" maxlength="7">
+    <input type="text" class="colorDisplay" id="display1" readonly>
+    <input type="text" class="slot" id="slot2" placeholder="Insira aqui" maxlength="7">
+    <input type="text" class="colorDisplay" id="display2" readonly>
+    <input type="text" class="slot" id="slot3" placeholder="Insira aqui" maxlength="7">
+    <input type="text" class="colorDisplay" id="display3" readonly>
+    
+    <button id="checkButton">Verificar</button>
+
+    <p>Digamos que ©haves do passado retornam truinfantes...</p>
+    <p id="message" class="hidden"></p>
+    <a id="nextLevel" class="hidden" href="ultimapista.html">Ir para o próximo nível</a>
+</div>
+
+<script>
+    const colorMap = {
+        '#DECADA': '1',
+        '#C0FFEE': '2',
+        '#CABBED': '3',
+        '#FACADA': 'easterEgg' // Código alternativo para Easter Egg
+    };
+
+    function updateColorDisplay(slotId, displayId) {
+        const colorValue = document.getElementById(slotId).value.toUpperCase();
+        const displayElement = document.getElementById(displayId);
+
+        if (colorValue in colorMap) {
+            displayElement.style.backgroundColor = colorValue;
+        } else {
+            displayElement.style.backgroundColor = 'transparent';
+        }
+    }
+
+    document.getElementById('slot1').addEventListener('input', () => updateColorDisplay('slot1', 'display1'));
+    document.getElementById('slot2').addEventListener('input', () => updateColorDisplay('slot2', 'display2'));
+    document.getElementById('slot3').addEventListener('input', () => updateColorDisplay('slot3', 'display3'));
+
+    document.getElementById('checkButton').addEventListener('click', () => {
+        const slot1 = document.getElementById('slot1').value.toUpperCase();
+        const slot2 = document.getElementById('slot2').value.toUpperCase();
+        const slot3 = document.getElementById('slot3').value.toUpperCase();
+
+        if (slot1 === '#DECADA' && slot2 === '#C0FFEE' && slot3 === '#CABBED') {
+            document.getElementById('message').innerText = 'Você encontrou a sequência correta!';
+            document.getElementById('message').className = 'success';
+            document.getElementById('nextLevel').classList.remove('hidden');
+        } else if (slot1 === '#FACADA') { // Resposta alternativa
+            document.getElementById('message').innerText = 'Parabéns pela descoberta curiosa, receba: entrada404';
+            document.getElementById('message').className = 'success';
+            document.getElementById('nextLevel').classList.add('hidden');
+        } else if (slot2 === '#FACADA') { // Resposta alternativa
+            document.getElementById('message').innerText = 'Parabéns pela descoberta curiosa, receba: entrada404';
+            document.getElementById('message').className = 'success';
+            document.getElementById('nextLevel').classList.add('hidden');
+        } else if (slot3 === '#FACADA') { // Resposta alternativa
+            document.getElementById('message').innerText = 'Parabéns pela descoberta curiosa, receba: entrada404';
+            document.getElementById('message').className = 'success';
+            document.getElementById('nextLevel').classList.add('hidden');
+        } else {
+            document.getElementById('message').innerText = 'Tente novamente!';
+            document.getElementById('message').className = 'error';
+            document.getElementById('nextLevel').classList.add('hidden');
+        }
+    });
+</script>
+
+</body>
+</html>
